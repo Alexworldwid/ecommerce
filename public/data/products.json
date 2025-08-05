@@ -1,0 +1,674 @@
+[
+    {
+      "id": "prod1000",
+      "name": "Front-line homogeneous adapter",
+      "price": 53.11,
+      "image": "/images/top1.png",
+      "description": "Hit truth different cup head.",
+      "category": [
+        "t-shirts",
+        "accessories",
+        "shoes"
+      ],
+      "inStock": true,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Happen American lead remember. Nation tend character see. Together source describe.",
+          "detailsBody2": "Would southern add film success small candidate. Participant as political large kind sense miss.",
+          "features": [
+            "Incubate transparent vortals",
+            "Exploit rich niches",
+            "Empower back-end users",
+            "Innovate scalable metrics"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev0a",
+          "reviewerName": "Hayden Kim",
+          "rating": 3.8,
+          "comment": "Agreement doctor people attorney Mr image.",
+          "date": "2024-09-18"
+        },
+        {
+          "reviewId": "rev0b",
+          "reviewerName": "Julia Richard",
+          "rating": 5.0,
+          "comment": "Organization cup physical impact act level do city.",
+          "date": "2024-10-18"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "Red",
+          "colorValue": "#FF0000"
+        },
+        {
+          "colorName": "Black",
+          "colorValue": "#000000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1001",
+      "name": "Vision-oriented client-driven knowledgebase",
+      "price": 142.66,
+      "image": "/images/top2.png",
+      "description": "Stop stand see strong thus little officer.",
+      "category": [
+        "t-shirts",
+        "jackets",
+        "formal"
+      ],
+      "inStock": false,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Can record attorney boy give participant. Good can while physical power card friend.",
+          "detailsBody2": "Image this this green major model west. Modern agree yes now education federal.",
+          "features": [
+            "Streamline user-centric bandwidth",
+            "Transition turn-key markets",
+            "Reinvent impactful applications",
+            "Strategize vertical interfaces"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev1a",
+          "reviewerName": "Erin Osborn",
+          "rating": 4.7,
+          "comment": "Day wall shoulder their Mrs yet.",
+          "date": "2025-01-24"
+        },
+        {
+          "reviewId": "rev1b",
+          "reviewerName": "Priscilla Cain",
+          "rating": 3.3,
+          "comment": "Medical attack family grow.",
+          "date": "2024-11-20"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "White",
+          "colorValue": "#FFFFFF"
+        },
+        {
+          "colorName": "Red",
+          "colorValue": "#FF0000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1002",
+      "name": "Persistent national orchestration",
+      "price": 89.98,
+      "image": "/images/top3.png",
+      "description": "Somebody one describe law sure.",
+      "category": [
+        "bags",
+        "t-shirts",
+        "jackets"
+      ],
+      "inStock": false,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Natural institution this put fast. Home happen approach yes general south grow box.",
+          "detailsBody2": "Pm billion civil push even into. Another network card go. Ability ready painting nature.",
+          "features": [
+            "Re-contextualize real-time niches",
+            "Matrix integrated e-commerce",
+            "Embrace next-generation e-tailers",
+            "Transform proactive paradigms"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev2a",
+          "reviewerName": "Lisa Banks",
+          "rating": 4.0,
+          "comment": "Would that drive.",
+          "date": "2025-07-06"
+        },
+        {
+          "reviewId": "rev2b",
+          "reviewerName": "Tonya Howard",
+          "rating": 3.9,
+          "comment": "Attack go several worry investment available.",
+          "date": "2025-03-23"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "Black",
+          "colorValue": "#000000"
+        },
+        {
+          "colorName": "Blue",
+          "colorValue": "#0000FF"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular"
+      ]
+    },
+    {
+      "id": "prod1003",
+      "name": "Reverse-engineered incremental circuit",
+      "price": 76.48,
+      "image": "/images/top4.png",
+      "description": "Public thought activity final.",
+      "category": [
+        "accessories",
+        "jackets",
+        "bags"
+      ],
+      "inStock": false,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Drive size need. Real discussion brother decide.",
+          "detailsBody2": "Nearly even light me perhaps. Billion skin law image myself make grow policy.",
+          "features": [
+            "Utilize killer models",
+            "Incubate web-enabled vortals",
+            "Unleash value-added systems",
+            "Incubate compelling synergies"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev3a",
+          "reviewerName": "Dr. Nicole Keller",
+          "rating": 3.8,
+          "comment": "Help cup forget sea though word.",
+          "date": "2024-12-17"
+        },
+        {
+          "reviewId": "rev3b",
+          "reviewerName": "Brooke Mckee",
+          "rating": 3.6,
+          "comment": "Sense public ball civil particularly personal.",
+          "date": "2025-04-27"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "White",
+          "colorValue": "#FFFFFF"
+        },
+        {
+          "colorName": "Green",
+          "colorValue": "#008000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1004",
+      "name": "Organic multimedia Internet solution",
+      "price": 121.27,
+      "image": "/images/top5.png",
+      "description": "But feeling million write throughout out.",
+      "category": [
+        "jackets",
+        "bags",
+        "formal"
+      ],
+      "inStock": true,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Partner reach natural participant. Then season health trial second technology. Sea throw camera.",
+          "detailsBody2": "Various future one herself. Experience important reveal whether either music word.",
+          "features": [
+            "Visualize impactful bandwidth",
+            "Disintermediate plug-and-play roi",
+            "Deliver strategic models",
+            "Evolve granular e-commerce"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev4a",
+          "reviewerName": "Lauren Jacobs",
+          "rating": 4.2,
+          "comment": "Father discuss health member from.",
+          "date": "2025-03-23"
+        },
+        {
+          "reviewId": "rev4b",
+          "reviewerName": "Jeremiah Lin",
+          "rating": 3.7,
+          "comment": "Air series religious save public same.",
+          "date": "2025-05-15"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "White",
+          "colorValue": "#FFFFFF"
+        },
+        {
+          "colorName": "Red",
+          "colorValue": "#FF0000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1005",
+      "name": "Devolved encompassing artificial intelligence",
+      "price": 59.44,
+      "image": "/images/top6.png",
+      "description": "Natural new himself person else how.",
+      "category": [
+        "bags",
+        "formal",
+        "jackets"
+      ],
+      "inStock": true,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Age street responsibility move action. System bank together exist hit safe adult.",
+          "detailsBody2": "Story north put whatever perform. Because surface field fly full.",
+          "features": [
+            "Maximize back-end models",
+            "Repurpose impactful deliverables",
+            "Redefine magnetic e-commerce",
+            "Integrate frictionless methodologies"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev5a",
+          "reviewerName": "Julia Riley",
+          "rating": 3.7,
+          "comment": "Beat guy cell bar lay them.",
+          "date": "2025-05-26"
+        },
+        {
+          "reviewId": "rev5b",
+          "reviewerName": "Bryan Robertson",
+          "rating": 3.4,
+          "comment": "Natural good different remember.",
+          "date": "2024-12-06"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "White",
+          "colorValue": "#FFFFFF"
+        },
+        {
+          "colorName": "Red",
+          "colorValue": "#FF0000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1006",
+      "name": "Enhanced well-modulated customer loyalty",
+      "price": 112.55,
+      "image": "/images/top7.png",
+      "description": "East myself design so risk technology dinner budget.",
+      "category": [
+        "bags",
+        "formal",
+        "accessories"
+      ],
+      "inStock": true,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Father less region magazine. Staff wrong off miss happy performance. Impact cell lawyer worry year.",
+          "detailsBody2": "Guess also financial personal financial food. Heavy artist time.",
+          "features": [
+            "Whiteboard collaborative infrastructures",
+            "Repurpose integrated action-items",
+            "Seize one-to-one web-readiness",
+            "Incubate mission-critical info-mediaries"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev6a",
+          "reviewerName": "Shari Clark",
+          "rating": 4.4,
+          "comment": "Ago leave feel door according drop dream.",
+          "date": "2024-08-17"
+        },
+        {
+          "reviewId": "rev6b",
+          "reviewerName": "Nicholas Welch",
+          "rating": 4.2,
+          "comment": "Race fear purpose.",
+          "date": "2025-02-11"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "Green",
+          "colorValue": "#008000"
+        },
+        {
+          "colorName": "White",
+          "colorValue": "#FFFFFF"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1008",
+      "name": "Decentralized heuristic open system",
+      "price": 26.41,
+      "image": "/images/top1.png",
+      "description": "Partner future beyond own claim whose return.",
+      "category": [
+        "formal",
+        "accessories",
+        "bags"
+      ],
+      "inStock": false,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Own that most final arrive. College road attention need power individual.",
+          "detailsBody2": "Painting present the. Factor finish exactly life money it worry.",
+          "features": [
+            "Generate leading-edge channels",
+            "Monetize cross-media bandwidth",
+            "Utilize mission-critical roi",
+            "Engineer user-centric supply-chains"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev8a",
+          "reviewerName": "William Thomas",
+          "rating": 4.0,
+          "comment": "Wish show claim card wonder senior campaign various.",
+          "date": "2025-06-08"
+        },
+        {
+          "reviewId": "rev8b",
+          "reviewerName": "Travis Contreras",
+          "rating": 4.8,
+          "comment": "Remain once effort air against stock.",
+          "date": "2024-08-08"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "Blue",
+          "colorValue": "#0000FF"
+        },
+        {
+          "colorName": "Green",
+          "colorValue": "#008000"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    },
+    {
+      "id": "prod1009",
+      "name": "Open-architected discrete customer loyalty",
+      "price": 20.53,
+      "image": "/images/top2.png",
+      "description": "Economic authority effort professor value base.",
+      "category": [
+        "jackets",
+        "bags",
+        "hoodies"
+      ],
+      "inStock": false,
+      "details": {
+          "detailsHead": "Product Details",
+          "detailsBody1": "Home rather his until. Know free represent. Weight purpose point born.",
+          "detailsBody2": "Race near organization. Meet skin growth gun store.",
+          "features": [
+            "Aggregate best-of-breed markets",
+            "Disintermediate open-source functionalities",
+            "Maximize mission-critical functionalities",
+            "Facilitate wireless vortals"
+          ]
+        },
+      "reviews": [
+        {
+          "reviewId": "rev9a",
+          "reviewerName": "Shannon Medina",
+          "rating": 4.8,
+          "comment": "Serious bar certainly front rather ball get.",
+          "date": "2025-07-09"
+        },
+        {
+          "reviewId": "rev9b",
+          "reviewerName": "Cynthia Bowman",
+          "rating": 3.0,
+          "comment": "Focus situation close financial measure such size.",
+          "date": "2024-09-26"
+        }
+      ],
+      "color": [
+        {
+          "colorName": "Red",
+          "colorValue": "#FF0000"
+        },
+        {
+          "colorName": "Blue",
+          "colorValue": "#0000FF"
+        }
+      ],
+      "size": [
+        {
+          "sizeName": "Small",
+          "sizeValue": "S"
+        },
+        {
+          "sizeName": "Medium",
+          "sizeValue": "M"
+        },
+        {
+          "sizeName": "Large",
+          "sizeValue": "L"
+        },
+        {
+          "sizeName": "Extra Large",
+          "sizeValue": "XL"
+        }
+      ],
+      "tags": [
+        "best seller",
+        "new arrival",
+        "popular",
+        "limited edition",
+        "featured"
+      ]
+    }
+  ]
