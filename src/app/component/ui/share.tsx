@@ -39,21 +39,23 @@ const Share = ({currentUrl, setOpenShareMenu}: ShareProps) => {
         }
     }
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (shareRef.current && !shareRef.current.contains(event.target as Node)) {
-            if (setOpenShareMenu) {
-                setOpenShareMenu(false);
-            }
-        }
-    }
+    
 
     // Attach the event listener for clicks outside the component
     useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (shareRef.current && !shareRef.current.contains(event.target as Node)) {
+                if (setOpenShareMenu) {
+                    setOpenShareMenu(false);
+                }
+            }
+        }
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [setOpenShareMenu]);
 
 
 
