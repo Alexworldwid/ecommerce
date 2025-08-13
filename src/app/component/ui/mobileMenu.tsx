@@ -32,10 +32,10 @@ const MobileMenu = () => {
             {/* links */}
             <ul className='flex flex-col justify-start items-center gap-8'>
                 <li>
-                    <Link href="" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>Home</Link>
+                    <Link href="/" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>Home</Link>
                 </li>
                 <li className='flex items-center justify-center gap-2 group'>
-                    <Link href="" className='text-gray-600 text-sm font-medium font-inter leading-normal group-hover:text-gray-900 transition-all duration-200 ease-in'>Categories</Link>
+                    <Link href="/search" className='text-gray-600 text-sm font-medium font-inter leading-normal group-hover:text-gray-900 transition-all duration-200 ease-in'>Categories</Link>
                 </li>
                 <li>
                     <Link href="" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>About</Link>

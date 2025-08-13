@@ -1,4 +1,4 @@
-import BestSellerCatalogue from "./bestSellerCatalogue";
+import BestSellerCatalogue from './bestSellerCatalogue';
 
 
 

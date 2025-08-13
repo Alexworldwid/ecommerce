@@ -109,15 +109,15 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
 
 
   return (
-    <article className='w-full max-w-[1116px] px-4 flex gap-8'>
-        <div className='w-1/2 h-[534px] bg-neutral-100 rounded-[5px] flex items-center justify-center'>
+    <article className='w-full max-w-[1116px] px-4 flex flex-col lg:flex-row gap-8'>
+        <div className='lg:w-1/2 h-[534px] bg-neutral-100 rounded-[5px] flex items-center justify-center'>
             <div className='relative w-72 h-96'>
                 <Image src={products.image} alt={products.name} fill />
             </div>
         </div>
 
-        <div className='w-1/2 flex flex-col gap-4 items-end'>
-            <div className='w-full max-w-96 flex-1 gap-4 flex flex-col'>
+        <div className='lg:w-1/2 flex flex-col gap-4 items-end'>
+            <div className='w-full lg:max-w-96 flex-1 gap-4 flex flex-col'>
                 <div className='flex items-start justify-between relative'>
                     <h2 className=' text-gray-900 text-xl font-bold font-inter'>{products.name}</h2>
                     <div onClick={handleShareClick} className=''>
@@ -142,10 +142,10 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                     <p className='justify-start text-gray-900 text-lg font-semibold font-inter'>${products.price}</p>
                 </div>
 
-                <div className='flex flex-col justify-between flex-1'>
+                <div className='flex flex-col justify-between flex-1 gap-4'>
 
                     {/* color selection */}
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-2'>
                         <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>Available colors:</p>
                         <div className='flex items-center justify-start gap-2'>
                             {
@@ -164,7 +164,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-2'>
                         <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>SELECT SIZE:</p>
 
                         <div className='flex items-center justify-start gap-2'>
@@ -182,7 +182,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='flex flex-col gap-2'>
                         <div>
                             <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>Quantity</p>
                         </div>
@@ -197,9 +197,9 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='flex flex-col gap-2'>
                         <div className='flex items-center justify-between gap-2 mt-4'>
-                            <button className='w-full h-11 px-6 py-3 bg-gray-900 rounded inline-flex justify-center items-center gap-1.5 overflow-hidden' onClick={handleAddToCart} >
+                            <button className='w-full h-11 px-6 py-3 bg-gray-900 hover:bg-gray-900/90 transition-all duration-150 ease-in rounded inline-flex justify-center items-center gap-1.5 overflow-hidden' onClick={handleAddToCart} >
                                 <p className='text-white text-sm font-medium font-inter leading-normal'>Add To Cart</p>
                             </button>
                             <button onClick={handleToggleWishlist} className='w-11 h-11 rounded outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-center items-center gap-2.5 overflow-hidden'>
@@ -213,7 +213,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                             </button>
                         </div>
                         <div>
-                            <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>— Free shipping on orders $100+</p>
+                            <p className='lg:justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide text-center lg:text-left'>— Free shipping on orders $100+</p>
                         </div>
                     </div>
                 </div>

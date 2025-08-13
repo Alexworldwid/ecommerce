@@ -1,8 +1,8 @@
-import BestSellers from "../component/ui/bestSellers";
-import Cta from "../component/ui/cta";
-import Features from "../component/ui/features";
-import Hero from "../component/ui/hero";
-import Sales from "../component/ui/sales";
+import BestSellers from "../component/layout/bestSellers";
+import Cta from "../component/layout/cta";
+import Features from "../component/layout/features";
+import Hero from "../component/layout/hero";
+import Sales from "../component/layout/sales";
 
 
 export default function Home() {
