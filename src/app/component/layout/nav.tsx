@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import React from 'react';
-import SearchBar from './searchBar';
-import MenuButton from './menuButton';
+import SearchBar from '../ui/searchBar';
+import MenuButton from '../ui/menuButton';
 import { useMenu } from '@/app/context/menuContext';
-import MobileMenu from './mobileMenu';
+import MobileMenu from '../ui/mobileMenu';
 
 
 const Nav = () => {
@@ -29,10 +29,10 @@ const Nav = () => {
                     {/* links */}
                     <ul className='hidden lg:inline-flex justify-start items-center gap-8'>
                         <li>
-                            <Link href="" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>Home</Link>
+                            <Link href="/" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>Home</Link>
                         </li>
                         <li >
-                            <Link href="" className='text-gray-600 align-middle text-sm font-medium font-inter leading-normal group-hover:text-gray-900 transition-all duration-200 ease-in'>Categories</Link>
+                            <Link href="/search" className='text-gray-600 align-middle text-sm font-medium font-inter leading-normal group-hover:text-gray-900 transition-all duration-200 ease-in'>Categories</Link>
                         </li>
                         <li>
                             <Link href="" className='text-gray-600 text-sm font-medium font-inter leading-normal hover:text-gray-900 transition-all duration-200 ease-in'>About</Link>

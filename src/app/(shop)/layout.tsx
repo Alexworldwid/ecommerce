@@ -1,12 +1,13 @@
-import Header from "@/app/component/ui/header";
-import Nav from "../component/ui/nav";
-import Footer from "../component/ui/footer";
+import Header from "@/app/component/layout/header";
+import Nav from "../component/layout/nav";
+import Footer from "../component/layout/footer";
 import { Toaster } from "react-hot-toast";
 // import MobileMenu from "../component/ui/mobileMenu";
 import { MenuProvider } from "../context/menuContext";
 import { ProductProvider } from "../context/productContext";
 import { CartProvider } from "../context/cartContext";
 import { WishlistProvider } from "../context/wishlistContext";
+import { SearchProvider } from "../context/searchContext";
 
 
 export default function shopLayout ({children}: Readonly<{
@@ -18,6 +19,7 @@ export default function shopLayout ({children}: Readonly<{
             <ProductProvider>
             <CartProvider>
             <WishlistProvider>
+            <SearchProvider>
                 <Header />
                 <Nav />
                 <main className="flex flex-col items-center justify-center w-full">
@@ -25,6 +27,7 @@ export default function shopLayout ({children}: Readonly<{
                 </main>
                 <Footer />
                 <Toaster position="top-center" />
+            </SearchProvider>
             </WishlistProvider>
             </CartProvider>
             </ProductProvider>

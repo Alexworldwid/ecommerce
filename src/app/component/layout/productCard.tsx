@@ -17,6 +17,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           src={image}
           alt={name}
           fill
+          className='object-contain object-center'
         />
       </div>
       
