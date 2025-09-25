@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import type { CartItem } from '@/app/types/cart';
 
 type CartContextType = {
@@ -7,13 +7,25 @@ type CartContextType = {
   addToCart: (item: CartItem) => void;
   removeFromCart: (target: { id: string; size: string; color: string }) => void;
   clearCart: () => void;
-  // we'll add addToCart etc. later
+  increaseAmount: (id: string, size: string, color: string) => void;
+  decreaseAmount: (id: string, size: string, color: string) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+            setCart(JSON.parse(storedCart));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     //add to cart
     const addToCart = (newItem: CartItem) => {
@@ -44,14 +56,39 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         );
       };
 
-    
+     // increase item amount in cart
+      const increaseAmount = (id: string, size: string, color: string) => {
+        setCart(prevCart =>
+          prevCart.map(item => {
+            if (item.id === id && item.size === size && item.color === color) {
+              return { ...item, amount: item.amount + 1 };
+            }
+            return item;
+          })
+        );
+      };
+
+      // decrease item amount in cart
+      const decreaseAmount = (id: string, size: string, color: string) => {
+        setCart(prevCart =>
+          prevCart
+            .map(item => {
+              if (item.id === id && item.size === size && item.color === color) {
+                return { ...item, amount: item.amount - 1 };
+              }
+              return item;
+            })
+            .filter(item => item.amount > 0) // remove if amount hits 0
+        );
+      };
+
     //   clear the cart
     const clearCart = () => {
         setCart([]);
       };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, increaseAmount, decreaseAmount }}>
       {children}
     </CartContext.Provider>
   );

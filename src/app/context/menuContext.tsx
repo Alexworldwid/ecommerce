@@ -5,6 +5,7 @@ import { useState, useContext, createContext, ReactNode } from 'react';
 type MenuContextType = {
   isMenuOpen: boolean;
   toggleMenu: () => void;
+  setIsMenuOpen?: (isOpen: boolean) => void; // Optional setter for external control
 };
 
 type MenuProviderProps = {
@@ -21,7 +22,7 @@ export const MenuProvider = ({ children }: MenuProviderProps) => {
   };
 
   return (
-    <MenuContext.Provider value={{ isMenuOpen, toggleMenu }}>
+    <MenuContext.Provider value={{ isMenuOpen, toggleMenu, setIsMenuOpen }}>
       {children}
     </MenuContext.Provider>
   );

@@ -2,8 +2,10 @@ import Link from 'next/link';
 import React from 'react';
 
 const FooterLink = () => {
+    
+
     return (
-        <section className='w-full flex items-center justify-center flex-col pt-4 md:pt-20 px-3'>
+        <section className={`w-full flex items-center justify-center flex-col pt-4 md:pt-20 px-3`}>
             <article className='max-w-[1116px] w-full flex flex-col md:grid md:grid-cols-3 lg:grid-cols-5 justify-between pb-12 gap-y-10 md:gap-y-8'>
                 <div className='inline-flex flex-col justify-start items-start gap-10'>
                     <div>
