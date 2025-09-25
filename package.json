@@ -11,8 +11,9 @@
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
     "@radix-ui/react-slider": "^1.3.5",
+    "@supabase/ssr": "^0.7.0",
+    "@supabase/supabase-js": "^2.56.1",
     "date-fns": "^4.1.0",
-    "firebase": "^11.10.0",
     "gsap": "^3.13.0",
     "next": "^15.3.5",
     "react": "^19.0.0",

@@ -17,8 +17,17 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "E-commerce",
+  title: {
+    template: 'Ecommerce | %s',
+    default: 'Exommerce', // a default is required when creating a template
+  },
   description: "a simple e-commerce application built with Next.js",
+  generator: 'Next.js',
+  applicationName: 'Next.js',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Next.js', 'React', 'JavaScript', "ecommerce"],
+  authors: [{ name: 'Alex' }],
+  creator: 'Obadun Adewale',
 };
 
 export default function RootLayout({

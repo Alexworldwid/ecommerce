@@ -57,7 +57,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                 price: products.price,
                 image: products.image,
                 color: color.colorValue,
-                size: size.sizeName,
+                size: size.sizeValue,
                 amount: amount,
             });
 

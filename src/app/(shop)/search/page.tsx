@@ -10,6 +10,7 @@ import { useProducts } from '@/app/context/productContext';
 import { useSearch } from '@/app/context/searchContext';
 import type { Products } from '@/app/types/product';
 import SortProducts from '@/utils/sortProducts';
+import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
 
 
@@ -26,7 +27,7 @@ type SearchTerm = {
 
 export default function ListingResult() {
     const { searchTerms } = useSearch();
-    const { products } = useProducts();
+    const { products, loading } = useProducts();
 
     const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
     const [category, setCategory] = useState<string[]>(["bags"]);
@@ -113,27 +114,41 @@ export default function ListingResult() {
         <div className='flex flex-row gap-8 w-full relative'>
             <FilterPanel category={category} setColor={setColor} setSize={setSize} setPriceRange={setPriceRange} priceRange={priceRange} setCategory={setCategory} color={color} size={size} isFilterMenuOpen={isFilterMenuOpen} />
             <article className='w-full flex flex-col'>
-                <AppliedFilter color={color} category={category} size={size} setIsFilterMenuOpen={setIsFilterMenuOpen} isFilterMenuOpen={isFilterMenuOpen} />
-                <PaginationInfo
-                    start={start}
-                    end={end}
-                    totalItems={filteredProducts.length}
-                    setSortTypeString={setSortTypeString}
-                    sortMenuOpen={sortMenuOpen}
-                    setSortMenuOpen={setSortMenuOpen}
-                    sortType={sortTypeString}
-                />
+              {
+                sorted.length > 0 && <AppliedFilter color={color} category={category} size={size} setIsFilterMenuOpen={setIsFilterMenuOpen} isFilterMenuOpen={isFilterMenuOpen} />
+              }
                 {
-                    !sorted || sorted.length === 0 ? (
-                        <div>Product not found</div>
-                    ) : (
+                  sorted.length > 0 && <PaginationInfo
+                                            start={start}
+                                            end={end}
+                                            totalItems={filteredProducts.length}
+                                            setSortTypeString={setSortTypeString}
+                                            sortMenuOpen={sortMenuOpen}
+                                            setSortMenuOpen={setSortMenuOpen}
+                                            sortType={sortTypeString}
+                                        />
+                }
+                {   
+                    loading ? (
+                        <p>
+                          loading...
+                        </p>
+                    ) : sorted && sorted.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {paginatedProducts.map((product) => (
-                                <div className='md:max-w-[320px]' key={product.id}>
-                                  <ProductCard product={product} />
-                                </div>
-                            ))}
-                        </div>
+                              {paginatedProducts.map((product) => (
+                                  <div className='md:max-w-[320px]' key={product.id}>
+                                    <ProductCard product={product} />
+                                  </div>
+                              ))}
+                          </div>
+                        
+                    ) : (
+                        <>
+                          <div className='relative w-full h-[350px] lg:h-[400px] rounded-md'>
+                            <Image src="/images/Allura - Error Found.png" alt='Allura - Error Found' fill className='rounded-md object-contain' />
+                          </div>
+                          <p className='text-inter font-medium leading-normal text-center mt-4'>Product Not found</p>
+                        </>
                     )
                 }
                 <CurrentPageIndicator currentPage={currentPage} setCurrentPage={setCurrentPage} totalItems={filteredProducts.length} />

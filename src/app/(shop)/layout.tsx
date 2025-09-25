@@ -8,11 +8,18 @@ import { ProductProvider } from "../context/productContext";
 import { CartProvider } from "../context/cartContext";
 import { WishlistProvider } from "../context/wishlistContext";
 import { SearchProvider } from "../context/searchContext";
+import { createClient } from "@/utils/supabase/server";
 
 
-export default function shopLayout ({children}: Readonly<{
+
+
+export default async function shopLayout ({children}: Readonly<{
     children: React.ReactNode;
   }>) {
+
+    const supabase = await createClient();
+    const {data: { user}} = await supabase.auth.getUser();
+
     return (
         <div className="relative">
             <MenuProvider >
@@ -21,7 +28,7 @@ export default function shopLayout ({children}: Readonly<{
             <WishlistProvider>
             <SearchProvider>
                 <Header />
-                <Nav />
+                <Nav initialUser={user} />
                 <main className="flex flex-col items-center justify-center w-full">
                     {children}
                 </main>
@@ -36,3 +43,4 @@ export default function shopLayout ({children}: Readonly<{
     )
     
 }
+

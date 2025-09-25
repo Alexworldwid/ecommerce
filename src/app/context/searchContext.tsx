@@ -9,8 +9,6 @@ const SearchContext = createContext<{
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchTerms, setSearchTerms] = useState('');
 
-  console.log('Search Term:', searchTerms);
-
   return (
     <SearchContext.Provider value={{ searchTerms, setSearchTerms }}>
       {children}
