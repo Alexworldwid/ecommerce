@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { useProducts } from '@/app/context/productContext';
 import type { Products } from '@/app/types/product';
 import ProductCard from './productCard';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+
 
 
 interface SimilarProductProps {
@@ -10,9 +12,9 @@ interface SimilarProductProps {
 }
 
 const SimilarProduct = ({product}: SimilarProductProps) => {
-    const { products } = useProducts();
+    const { items } = useSelector((state: RootState) => state.products)
 
-    const SimilarProducts = products.filter((p) => p.id !== product.id );
+    const SimilarProducts = items.filter((p) => p.id !== product.id );
 
     return (
         <div className='flex flex-col gap-6 w-full max-w-[1116px] px-4 py-16'>

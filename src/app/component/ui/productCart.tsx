@@ -73,9 +73,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
     useEffect(() => {
         const exists = wishlist.some(
             (w) =>
-            w.product_id === products.id &&
-            w.color === color?.colorValue &&
-            w.size === size?.sizeValue
+            w.product_id === products.id
         );
         setWishListState(exists);
     }, [wishlist, products.id, color, size]);

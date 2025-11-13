@@ -7,7 +7,10 @@ import PageIndicator from '@/app/component/ui/pageIndicator';
 import ProductCart from '@/app/component/ui/productCart';
 import SimilarProduct from '@/app/component/layout/similarProduct';
 import ProductAbout from '@/app/component/layout/productAbout';
-import { useProducts } from '@/app/context/productContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '@/store/productslice';
+import { AppDispatch, RootState } from '@/store/store';
+
 
 
 
@@ -18,14 +21,23 @@ export default function Products() {
   const [product, setProduct] = useState<Products | null>(null);
   const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
 
+  const dispatch = useDispatch<AppDispatch>()
+  const {items, loading} = useSelector((state: RootState) => state.products)
 
-  const { products, loading } = useProducts();
+
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, items.length]);
+
+
 
 
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const matched = products.find((p) => p.id === slug);
+        const matched = items.find((p) => p.id === slug);
         setProduct(matched || null);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -35,7 +47,7 @@ export default function Products() {
 
     if (slug) fetchProduct();
 
-  }, [slug, products]);
+  }, [slug, items]);
 
   if (loading) return <div className="py-40">Loading...</div>;
   if (!product) return <div className="py-40">Product not found</div>;

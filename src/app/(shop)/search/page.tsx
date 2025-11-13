@@ -7,12 +7,14 @@ import ProductCard from '@/app/component/layout/productCard';
 import CurrentPageIndicator from '@/app/component/ui/currentPageIndicator';
 import FilterPanel from '@/app/component/ui/filterPanel';
 import PageIndicator from '@/app/component/ui/pageIndicator';
-import { useProducts } from '@/app/context/productContext';
 import { useSearch } from '@/app/context/searchContext';
 import type { Products } from '@/app/types/product';
+import { RootState } from '@/store/store';
 import SortProducts from '@/utils/sortProducts';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 
 
 
@@ -28,7 +30,7 @@ type SearchTerm = {
 
 export default function ListingResult() {
     const { searchTerms } = useSearch();
-    const { products, loading } = useProducts();
+    const { items, loading } = useSelector((state: RootState) => state.products)
 
     const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
     const [category, setCategory] = useState<string[]>(["bags"]);
@@ -90,12 +92,12 @@ export default function ListingResult() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const results = filterProducts(products, searchTerm);
+      const results = filterProducts(items, searchTerm);
       setFilteredProducts(results);
     }, 300);
   
     return () => clearTimeout(timeout);
-  }, [searchTerm, products]);
+  }, [searchTerm, items]);
 
   const sorted = useMemo(() => {
     return SortProducts({ products: filteredProducts, sortType: sortTypeString });
@@ -118,41 +120,41 @@ export default function ListingResult() {
               {
                 sorted.length > 0 && <AppliedFilter color={color} category={category} size={size} setIsFilterMenuOpen={setIsFilterMenuOpen} isFilterMenuOpen={isFilterMenuOpen} />
               }
-                {
-                  sorted.length > 0 && <PaginationInfo
-                                            start={start}
-                                            end={end}
-                                            totalItems={filteredProducts.length}
-                                            setSortTypeString={setSortTypeString}
-                                            sortMenuOpen={sortMenuOpen}
-                                            setSortMenuOpen={setSortMenuOpen}
-                                            sortType={sortTypeString}
-                                        />
-                }
-                {   
-                    loading ? (
-                        <p>
-                          loading...
-                        </p>
-                    ) : sorted && sorted.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                              {paginatedProducts.map((product) => ( 
-                                  <div className='md:max-w-[320px]' key={product.id}>
-                                    <ProductCard product={product} />
-                                  </div>
-                              ))}
-                          </div>
-                        
-                    ) : (
-                        <>
-                          <div className='relative w-full h-[350px] lg:h-[400px] rounded-md'>
-                            <Image src="/images/Allura - Error Found.png" alt='Allura - Error Found' fill className='rounded-md object-contain' />
-                          </div>
-                          <p className='text-inter font-medium leading-normal text-center mt-4'>Product Not found</p>
-                        </>
-                    )
-                }
-                <CurrentPageIndicator currentPage={currentPage} setCurrentPage={setCurrentPage} totalItems={filteredProducts.length} />
+              {
+                sorted.length > 0 && <PaginationInfo
+                  start={start}
+                  end={end}
+                  totalItems={filteredProducts.length}
+                  setSortTypeString={setSortTypeString}
+                  sortMenuOpen={sortMenuOpen}
+                  setSortMenuOpen={setSortMenuOpen}
+                  sortType={sortTypeString}
+                />
+              }
+              {   
+                loading ? (
+                  <p>
+                    loading Products...
+                  </p>
+                ) : sorted && sorted.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {paginatedProducts.map((product) => ( 
+                        <div className='md:max-w-[320px]' key={product.id}>
+                          <ProductCard product={product} />
+                        </div>
+                    ))}
+                  </div>
+                    
+                ) : (
+                    <>
+                      <div className='relative w-full h-[350px] lg:h-[400px] rounded-md'>
+                        <Image src="/images/Allura - Error Found.png" alt='Allura - Error Found' fill className='rounded-md object-contain' />
+                      </div>
+                      <p className='text-inter font-medium leading-normal text-center mt-4'>Product Not found</p>
+                    </>
+                )
+              }
+              <CurrentPageIndicator currentPage={currentPage} setCurrentPage={setCurrentPage} totalItems={filteredProducts.length} />
             </article>
         </div>
     </section>

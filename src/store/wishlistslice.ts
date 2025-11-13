@@ -53,7 +53,7 @@ export const syncWishlistOnLogin = createAsyncThunk(
 
     if (!localWishlist.length) {
       // No local items → just fetch from Supabase
-      dispatch(fetchWishlist(userId));
+      await dispatch(fetchWishlist(userId));
       return;
     }
 
@@ -73,9 +73,7 @@ export const syncWishlistOnLogin = createAsyncThunk(
       (local) =>
         !remoteWishlist?.some(
           (remote) =>
-            remote.product_id === local.product_id &&
-            remote.color === local.color &&
-            remote.size === local.size
+            remote.product_id === local.product_id 
         )
     );
 
@@ -116,9 +114,7 @@ export const toggleWishlistItem = createAsyncThunk(
     if (!user) {
       const cached = (getCachedData("wishlist") || []) as WishlistItem[];
       const exists = cached.some((c) =>
-          c.product_id === item.product_id &&
-          c.color === item.color &&
-          c.size === item.size
+          c.product_id === item.product_id 
       );
 
       if (exists) {
@@ -135,8 +131,6 @@ export const toggleWishlistItem = createAsyncThunk(
       .select("id")
       .eq("user_id", user.id)
       .eq("product_id", item.product_id)
-      .eq("color", item.color)
-      .eq("size", item.size)
       .single();
 
     if (fetchError && fetchError.code !== "PGRST116") {
@@ -199,12 +193,12 @@ export const wishlistSlice = createSlice({
 
       const exists = state.items.some(
         (item) =>
-          item.color === newItem.color &&
-          item.size === newItem.size &&
           item.product_id === newItem.product_id
       );
 
-      if (!exists) {
+      if(exists) {
+        toast.success("Item is already in wishlist");
+      } else  {
         state.items.push(newItem);
         toast.success("Item added to wishlist");
       }
@@ -217,8 +211,6 @@ export const wishlistSlice = createSlice({
       state.items = state.items.filter(
         (item) =>
           !(
-            item.color === removeItem.color &&
-            item.size === removeItem.size &&
             item.product_id === removeItem.product_id
           )
       );
