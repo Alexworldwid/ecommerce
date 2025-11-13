@@ -13,12 +13,21 @@ interface ProductReviewProps {
     product: Products;
 }
 
+interface Review {
+  reviewId: string;
+  reviewerName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 const ProductReview = ({ product }: ProductReviewProps) => {
-    const { reviews } = product;       
+    const { reviews } = product;  
+    const [reviewsState, setReviews] = useState<Review[]>(reviews || []); 
     const [writingReviews, setWritingReviews] = useState(false);
 
 
-    const totalReviews = product.reviews?.reduce((acc, review) => acc + review.rating, 0) || 0;
+    const totalReviews = reviewsState?.reduce((acc, review) => acc + review.rating, 0) || 0;
     const averageRating = totalReviews / (product.reviews?.length || 1);
     const roundedRating = Math.round(averageRating * 10) / 10;
 
@@ -27,7 +36,7 @@ const ProductReview = ({ product }: ProductReviewProps) => {
     const [sortType, setSortType] = useState("newest");
 
 
-    const sortedReviews = [...(reviews) ?? []].sort((a, b) => {
+    const sortedReviews = [...(reviewsState) ?? []].sort((a, b) => {
         if (sortType === "newest") {
             return new Date(b.date).getTime() - new Date(a.date).getTime();
         } else if (sortType === "oldest") {
@@ -60,13 +69,18 @@ const ProductReview = ({ product }: ProductReviewProps) => {
         setSortMenuOpen(false);
     }
 
+    const onNewReview = (newReview: Review) => {
+        setReviews((prev) => [...prev, newReview]);
+        setWritingReviews(false);
+    }
+    
 
 
 
     return (
         <div className='flex flex-col gap-6'>
           {writingReviews ? (
-            <ReviewForm reviews={reviews} stopWritingReview={stopWritingReview} />
+            <ReviewForm stopWritingReview={stopWritingReview} productId={product.id}   onNewReview={onNewReview} />
           ) : (
             <>
               <div className='flex gap-4 flex-col border-b border-b-gray-500 py-4'>
@@ -130,7 +144,7 @@ const ProductReview = ({ product }: ProductReviewProps) => {
                 </div>
               ))}
       
-              {reviews && reviews.length > visibleReviews && (
+              {reviewsState && reviewsState.length > visibleReviews && (
                 <div className='flex items-center justify-center'>
                   <button
                     onClick={loadMoreReviews}

@@ -2,26 +2,29 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { useCart } from '@/app/context/cartContext';
 import Link from 'next/link';
+import { useSelector } from "react-redux";
+import { RootState } from '@/store/store';
 
 
 interface PlaceOrderProps {
     submit?: () => void;
+    Loading?: boolean;
 }
 
 
 
-const PlaceOrder = ({submit}: PlaceOrderProps) => {
-    const { cart } = useCart();
+const PlaceOrder = ({submit, Loading}: PlaceOrderProps) => {
+    const cart = useSelector((state: RootState) => state.cart.items);
     const displayedItems = cart.slice(0, 3); // Display only the first 3 items
 
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.amount, 0);
+    const subtotal = cart.reduce((acc, item) => acc + (item.products?.price ?? 0) * (item.amount ?? 0), 0);
     const roundedSubtotal = Math.round(subtotal * 100) / 100; // Round to two decimal places
     const tax = subtotal * 0.1;
     const roundedTax = Math.round(tax * 100) / 100; // Round to two decimal places
     const total = subtotal + tax;
     const roundedTotal = Math.round(total * 100) / 100; // Round to two decimal places
+
     return (
         <div className='w-full md:max-w-[40%] lg:max-w-[380px] flex flex-col gap-8 pt-4'>
             <div>
@@ -33,7 +36,11 @@ const PlaceOrder = ({submit}: PlaceOrderProps) => {
                         displayedItems.map((item) => (
                             <div key={`${item.id}-${item.size}-${item.color}`} className='px-2.5 flex justify-between items-center relative w-10 h-10 bg-neutral-100 rounded-[100px]'>
                                <div className='relative w-8 h-8'>
-                                 <Image src={item.image} alt={item.name} fill className='object-contain' />
+                                 {item.products?.image ? (
+                                   <Image src={item.products.image} alt={item.products?.name ?? 'Product image'} fill className='object-contain' />
+                                 ) : (
+                                   <div className='w-full h-full bg-gray-200 rounded' />
+                                 )}
                                </div>
                             </div>
                         ))
@@ -68,8 +75,11 @@ const PlaceOrder = ({submit}: PlaceOrderProps) => {
                     type="button"
                     onClick={submit} 
                     className="px-6 py-3 bg-gray-900 rounded transition-all duration-150 ease-in text-white text-sm font-medium font-inter hover:bg-gray-800 w-full"
+                    disabled={Loading}
                     >
-                    Place Order
+                    {
+                        Loading ? 'Placing Order...' : 'Place Order'
+                    }
                 </button>
             </div>
         </div>

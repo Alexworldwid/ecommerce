@@ -8,6 +8,7 @@ import MobileMenu from '../ui/mobileMenu';
 import ActiveUser from './active-user';
 import { User } from '@supabase/supabase-js';
 
+
 interface NavProps {
     initialUser: User |null;
 }
@@ -61,7 +62,7 @@ const Nav = ({ initialUser }: NavProps) => {
                     </Link>
 
                     {/* profile icon */}
-                    <Link href="">
+                    <Link href="/profile">
                         <ActiveUser initialUser={initialUser} />
                     </Link>
                 </div>

@@ -1,12 +1,20 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Products } from '@/app/types/product';
 import Image from 'next/image';
-import { useCart } from '@/app/context/cartContext';
-import { useWishlist } from '@/app/context/wishlistContext';
 import toast from 'react-hot-toast';
 import Share from './share';
+import { createClient } from '@/utils/supabase/client';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '@/store/store';
+import { addToCart } from '@/store/cartslice';
+import { fetchWishlist, loadWishlistLocal, syncWishlistOnLogin, toggleWishlistItem } from '@/store/wishlistslice';
+import { WishlistItem } from '@/app/types/wishlist';
+import { getCachedData } from '@/utils/localCache';
+
+
+
 
 
 
@@ -16,85 +24,126 @@ type ProductCartProps = {
 };
 
 const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
-    const [color, setColor] = useState(products.color?.[0] || null);
-    const [size, setSize] = useState(products.size?.[0] || null);
-    const [amount, setAmount] = useState<number>(1);
-    const { addToCart } = useCart();
-    const { toggleWishlist, isInWishlist } = useWishlist();
-    const [wishListState, setWishListState] = useState(isInWishlist({
-        id: products.id,
-        size: size?.sizeName || '',
-        color: color?.colorValue || '',
-        name: products.name,
-        price: products.price,
-        image: products.image,
-    }));
-    const [openShareMenu, setOpenShareMenu] = useState(false);
+    const [color, setColor] = useState(products.colors?.[0] || null);
+    const [size, setSize] = useState(products.sizes?.[0] || null);
+    const [amount, setAmount] = useState(1);
+    const dispatch = useDispatch<AppDispatch>();
+    const [userId, setUserId] = useState<string>('');
 
+
+    const wishlist = useSelector((state: RootState) => state.wishlist.items)
+    const [wishListState, setWishListState] = useState(false);
+
+    const [openShareMenu, setOpenShareMenu] = useState(false);
 
     const totalReviews = products.reviews?.reduce((acc, review) => acc + review.rating, 0) || 0;
     const averageRating = totalReviews / (products.reviews?.length || 1);
     const roundedRating = Math.round(averageRating * 10) / 10;
 
 
-    const increaseAmount = () => {
-        setAmount(prevAmount => prevAmount + 1);
-    }
+    useEffect(() => {
+    const supabase = createClient();
 
-    const decreaseAmount = () => {
-        if (amount === 1) {
-            setAmount(amount);
-        } else {
-            setAmount(prevAmount => prevAmount - 1);
-        }
-    }
+        const fetchUserWishlist = async () => {
+            // 1️⃣ Get user
+            const { data: { user } } = await supabase.auth.getUser();
+
+            // 2️⃣ Load local wishlist first (from cache)
+            dispatch(loadWishlistLocal());
+
+            if (user) {
+            setUserId(user.id);
+
+            const localWishlist: WishlistItem[] = getCachedData("wishlist") || [];
+
+            // 3️⃣ If there are local items, sync them up to Supabase
+            if (localWishlist.length > 0) {
+                await dispatch(syncWishlistOnLogin(user.id));
+            }
+
+            // 4️⃣ Finally, fetch the merged wishlist from Supabase
+            await dispatch(fetchWishlist(user.id));
+            }
+        };
+
+        fetchUserWishlist();
+    }, [dispatch]);
+
+
+    useEffect(() => {
+        const exists = wishlist.some(
+            (w) =>
+            w.product_id === products.id &&
+            w.color === color?.colorValue &&
+            w.size === size?.sizeValue
+        );
+        setWishListState(exists);
+    }, [wishlist, products.id, color, size]);
+
+
 
     const handleAddToCart = () => {
         if (color && size) {
-            addToCart({
-                id: products.id,
-                name: products.name,
-                price: products.price,
-                image: products.image,
+            const formated = {
+                id: '', 
+                user_id: userId,
+                product_id: products.id,
                 color: color.colorValue,
                 size: size.sizeValue,
                 amount: amount,
-            });
+                products: {
+                    id: products.id,
+                    name: products.name,
+                    price: products.price,
+                    image: products.image,
+                }
+            }
+            dispatch(addToCart({ item: formated, userId}))
 
             setAmount(1); // Reset amount after adding to cart
-            setColor(products.color?.[0] || null); // Reset color to first available color
-            setSize(products.size?.[0] || null); // Reset size to first available size
+            setColor(products.colors?.[0] || null); // Reset color to first available color
+            setSize(products.sizes?.[0] || null); // Reset size to first available size
 
-            toast.success(`${products.name} added to cart!`, {
-                duration: 3000,
-                position: 'top-center',
-                style: {
-                    background: '#fff',
-                    color: '#000',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-                },
-            });
         } else {
-            alert('Please select a color and size before adding to cart.');
+            toast.error('Please select a color and size before adding to cart.');
         }
     };
 
 
+    const handleAmountIncrease = () => {
+        setAmount(prev => prev + 1)
+    }
+
+    const handleAmountDecrease = () => {
+        setAmount(prev => (prev > 1 ? prev - 1 : 1))
+    }
 
 
     const handleToggleWishlist = () => {
-        setWishListState(!wishListState);
-        toggleWishlist({
+        if (!color || !size) {
+            toast.error('Please select a color and size first.');
+            return;
+        }
+
+        const wishlistItem: WishlistItem = {
+            id: '',
+            user_id: userId,
+            product_id: products.id,
+            color: color.colorValue,
+            size: size.sizeValue,
+            products: {
             id: products.id,
-            size: size?.sizeName || '',
-            color: color?.colorValue || '',
             name: products.name,
             price: products.price,
             image: products.image,
-        });
-    }
+            },
+            created_at: new Date().toISOString(),
+        };
+
+        setWishListState((prev) => !prev);
+        dispatch(toggleWishlistItem(wishlistItem));
+    };
+
 
 
     const handleColorClick = (c: {colorValue: string, colorName: string}) => {
@@ -134,7 +183,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                         <p className='text-gray-600 text-xs font-medium font-inter capitalize leading-normal align-middle flex items-center justify-center'>{roundedRating} - {products.reviews?.length} reviews</p>
                     </div>
                     <div className='px-4 py-0.5 bg-neutral-100 rounded-[100px] outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-start items-start gap-2 overflow-hidden'>
-                        <p className={`${products.inStock ? "text-green-500" : "text-red-500"} text-xs font-medium font-inter capitalize leading-normal`}>{products.inStock? "IN STOCK": "OUT OF STOCK"}</p>
+                        <p className={`${products.in_stock ? "text-green-500" : "text-red-500"} text-xs font-medium font-inter capitalize leading-normal`}>{products.in_stock? "IN STOCK": "OUT OF STOCK"}</p>
                     </div>
                 </div>
 
@@ -149,7 +198,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                         <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>Available colors:</p>
                         <div className='flex items-center justify-start gap-2'>
                             {
-                                products.color?.map((c, index) => {
+                                products.colors?.map((c, index) => {
                                     return (
                                         <div className={`${c === color ? 'outline outline-1 outline-offset-[-1px] outline-gray-900' : ''} flex items-center justify-center h-8 w-8 rounded-full`}  key={index} >
                                             <button 
@@ -169,7 +218,7 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
 
                         <div className='flex items-center justify-start gap-2'>
                             {
-                                products.size?.map((s, index) => (
+                                products.sizes?.map((s, index) => (
                                     <button 
                                         key={index} 
                                         className={`h-10 min-w-10  inline-flex flex-col justify-center items-center overflow-hidden rounded outline outline-1 outline-offset-[-1px] ${s === size ? ' outline-gray-900' : 'outline-gray-200'}`} 
@@ -187,11 +236,11 @@ const ProductCart = ({ products, currentUrl }: ProductCartProps) => {
                             <p className='justify-start text-gray-600 text-xs font-medium font-inter uppercase leading-normal tracking-wide'>Quantity</p>
                         </div>
                         <div className='w-full max-w-40 h-11 min-w-10 px-4 rounded outline outline-1 outline-offset-[-1px] outline-gray-200 inline-flex justify-between flex-row-reverse items-center overflow-hidden'>
-                            <button className='justify-start text-gray-800 text-sm font-medium font-inter leading-normal' onClick={increaseAmount}>
+                            <button className='justify-start text-gray-800 text-sm font-medium font-inter leading-normal' onClick={handleAmountIncrease}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3c3c39" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path></svg>
                             </button>
                             <p className='justify-start text-gray-800 text-sm font-medium font-inter leading-normal'>{amount}</p>
-                            <button className='justify-start text-gray-800 text-sm font-medium font-inter leading-normal' onClick={decreaseAmount}>
+                            <button className='justify-start text-gray-800 text-sm font-medium font-inter leading-normal' onClick={handleAmountDecrease}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3c3c39" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"></path></svg>
                             </button>
                         </div>

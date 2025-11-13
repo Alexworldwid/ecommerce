@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import StarRatingInput from '../ui/starRatingInput';
+import { createClient } from '@/utils/supabase/client';
+
 
 
 const schema = z.object({
@@ -18,17 +20,21 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 interface ReviewFormProps {
-    reviews?: {
-        reviewId: string;
-        reviewerName: string;
-        rating: number;
-        date: string;
-        comment: string;
-    }[];
+    onNewReview?: (review: Review) => void;
     stopWritingReview?: () => void;
+    productId: string;
 };
 
-export default function ReviewForm({reviews, stopWritingReview}: ReviewFormProps) {
+interface Review {
+  reviewId: string;
+  reviewerName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
+export default function ReviewForm({onNewReview, stopWritingReview, productId}: ReviewFormProps) {
+  const supabase = createClient();
   const {
     register,
     handleSubmit,
@@ -56,11 +62,42 @@ export default function ReviewForm({reviews, stopWritingReview}: ReviewFormProps
       comment: data.reviews,
     };
 
-    reviews?.push(newReview);
-    stopWritingReview?.();
-    console.log('Submitted Review:', newReview);
-    console.log('All Reviews:', reviews);
-    reset();
+    try {
+      const {data, error:fetchError} = await supabase
+        .from('products')
+        .select('reviews')
+        .eq('id', productId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      const currentReviews = data?.reviews || [];
+
+      // ✅ Push the new review
+      const updatedReviews = [...currentReviews, newReview];
+
+      // ✅ Update the row
+      const { error: updateError } = await supabase
+        .from("products")
+        .update({ reviews: updatedReviews })
+        .eq("id", productId);
+
+      if (updateError) throw updateError;
+
+      if (!updateError) {
+        onNewReview?.(newReview); // update parent UI
+        alert("Review added successfully!");
+        stopWritingReview?.();
+        reset();
+      }
+
+      alert("Review added successfully!");
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+
+
+    
   };
 
   return (

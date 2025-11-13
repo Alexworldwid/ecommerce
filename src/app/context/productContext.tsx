@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createClient } from "@/utils/supabase/client"; 
 import type { Products } from "../types/product";
 
 type ProductContextType = {
@@ -12,26 +13,24 @@ const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Products[]>([]);
-  const [loading, setLoading] = useState(true); // start as true
+  const [loading, setLoading] = useState(true);
 
-  // Fetch all products once
   useEffect(() => {
-    let isMounted = true; // guard in case component unmounts
+    let isMounted = true;
+    const supabase = createClient();
 
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/data/products.json"); // Or your API URL
-        const data = await res.json();
+        const { data, error } = await supabase.from("products").select("*");
 
-        if (isMounted) {
+        if (error) throw error;
+        if (isMounted && data) {
           setProducts(data);
         }
       } catch (err) {
-        console.error("Failed to fetch products", err);
+        console.error("Failed to fetch products:", err);
       } finally {
-        if (isMounted) {
-          setLoading(false); // only update if still mounted
-        }
+        if (isMounted) setLoading(false);
       }
     };
 
@@ -49,7 +48,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook
 export const useProducts = () => {
   const context = useContext(ProductContext);
   if (!context) {

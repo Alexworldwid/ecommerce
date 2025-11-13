@@ -1,7 +1,35 @@
 import ClientFormLogin from '@/app/component/forms/clientFormLogin';
 import SignInWithGoogle from '@/app/component/forms/signInWithGoogle';
 import PageIndicator from '@/app/component/ui/pageIndicator';
+import { Metadata } from 'next';
 import React from 'react';
+
+
+export const metadata: Metadata = {
+  title: 'Login',
+  description: 'Welcome to Eccomerce home page',
+  openGraph: {
+    title: 'Eccomerce Login',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce homepage',
+    images: [
+      {
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eccomerce Login',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
+  },
+}
 
 
 

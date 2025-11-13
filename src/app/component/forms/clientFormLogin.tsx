@@ -9,6 +9,7 @@ import { login } from "@/app/action";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
+
 // ✅ schema
 const schema = z.object({
   email: z.string().nonempty("Email is required").email("Enter a valid email"),
@@ -57,8 +58,12 @@ export default function ClientFormLogin() {
     // call server action via startTransition
     startTransition(async () => {
       await loginAction(formData);
-      if (!loginState.error) reset();
+      if ( !loginState.error) {
+        reset();
+      }
     });
+
+
   };
 
   return (

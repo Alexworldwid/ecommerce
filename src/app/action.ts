@@ -52,6 +52,8 @@ export async function signOutAction () {
     throw new Error(error.message);
   }
 
+
+
   redirect("/login");
 }
 

@@ -8,15 +8,15 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Home',
-  description: 'Welcome to our eccomerce home page',
+  description: 'Welcome to Eccomerce home page',
   openGraph: {
-    title: 'Next.js',
-    description: 'The React Framework for the Web',
-    url: 'https://nextjs.org',
-    siteName: 'Next.js',
+    title: 'Eccomerce',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce homepage',
     images: [
       {
-        url: 'https://nextjs.org/og.png', // Must be an absolute URL
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
         width: 800,
         height: 600,
       },
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Next.js',
-    description: 'The React Framework for the Web',
-    images: ['https://nextjs.org/og.png'], // Must be an absolute URL
+    title: 'Eccomerce',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
   },
 }
 

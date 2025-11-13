@@ -3,20 +3,10 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { clearCartLocal } from '@/store/cartslice';
-
 
 const schema = z.object({
-  email: z.string()
-    .nonempty({ message: "Email is required" })
-    .email({ message: "Enter a valid email address" }),
-  fullName: z.string()
-    .nonempty({ message: "Full name is required" })
-    .regex(/^[a-zA-Z]+(?: [a-zA-Z]+)+$/, { message: "Enter your first and last name" }),
   shippingAddress: z.object({
     street: z.string()
       .nonempty({ message: "Street address is required" })
@@ -30,9 +20,9 @@ const schema = z.object({
       .nonempty({ message: "State is required" })
       .min(2, { message: "State is too short" })
       .regex(/^[a-zA-Z\s]+$/, { message: "State should only contain letters" }),
-    zipCode: z.number()
-        .min(10000, { message: "Enter a valid zip code" })
-        .max(99999, { message: "Enter a valid zip code" }),
+    zipCode: z.string()
+      .nonempty({ message: "Zip code is required" })
+      .regex(/^\d{5}(-\d{4})?$/, { message: "Enter a valid zip code (e.g. 12345 or 12345-6789)" }),
     country: z.string()
       .nonempty({ message: "Country is required" })
       .min(2, { message: "Country is too short" })
@@ -43,47 +33,47 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-interface ShippingAddressFormProps {
-    formRef: React.RefObject<HTMLFormElement | null>
-}
 
-export default function ShippingAddressForm({formRef}: ShippingAddressFormProps) {
-  const router = useRouter();
-  const dispatch = useDispatch();
+export default function ProfileAddressForm() {
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
 
-    useEffect(() => {
-        const fetchAddressAndProfile = async () => {
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) return;
+  useEffect(() => {
+    const fetchAddress = async () => {
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
 
-            const [{ data: savedAddress }, { data: profileData }] = await Promise.all([
-                supabase.from('addresses').select('*').eq('user_id', user.id).single(),
-                supabase.from('profiles').select('full_name, email').eq('id', user.id).single()
-            ]);
+        if (!user) return;
 
+        const { data: savedAddress, error } = await supabase
+        .from('addresses')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+
+        if (savedAddress && !error) {
             reset({
-            email: user.email || '',
-            fullName: profileData?.full_name || '',
-            shippingAddress: {
-                street: savedAddress?.street_address || '',
-                city: savedAddress?.city || '',
-                state: savedAddress?.state || '',
-                zipCode: savedAddress?.zip_code || '',
-                country: savedAddress?.country || ''
-            }
+                shippingAddress: {
+                street: savedAddress.street_address || '',
+                city: savedAddress.city || '',
+                state: savedAddress.state || '',
+                zipCode: savedAddress.zip_code || '',
+                country: savedAddress.country || ''
+                }
             });
-        };
+        }
+    };
 
-        fetchAddressAndProfile();
+    fetchAddress();
     }, [reset]);
 
-
   const onSubmit = async (data: FormData) => {
+    setLoading(true);
+
     try {
         const supabase = await createClient();
         const {data: {user}} = await supabase.auth.getUser();
@@ -93,92 +83,34 @@ export default function ShippingAddressForm({formRef}: ShippingAddressFormProps)
             return;
         }
 
-        // get all the cart item for a particular user
-        const {data: cartItems, error: cartError} = await supabase
-        .from('cart')
-        .select('*')
-        .eq('user_id', user.id);
-
-        if (cartError) throw cartError;
-
-        if (!cartItems || cartItems.length === 0) {
-            router.push('/cart');
-            return;
-        }
-
-
         // update the address in the database 
         const {data: addressData, error: addressError} = await supabase
         .from('addresses')
-        .upsert([{
+        .upsert({
             user_id: user.id,
             street_address: data.shippingAddress.street,
             city: data.shippingAddress.city,
             state: data.shippingAddress.state,
             zip_code: data.shippingAddress.zipCode,
             country: data.shippingAddress.country,
-        }], {onConflict: 'user_id'})
+        }, {onConflict: 'user_id'})
         .select()
         .single();
 
         if (addressError) throw addressError;
-
-        // update user profile with full name and email
-        const {error: profileError} = await supabase
-        .from('profiles')
-        .upsert({
-            id: user.id,
-            full_name: data.fullName,
-            email: data.email
-        }, {onConflict: 'id'})
-        .select();
-
-        if (profileError) throw profileError;
-    
-
-
-        // insert orders for each item in the cart
-        const ordersToInsert = cartItems.map(item => ({
-            user_id: user.id,
-            product_id: item.product_id,
-            status: 'pending',
-            quantity: item.amount,
-            color: item.color,
-            size: item.size,
-            address_id: addressData.id
-        }))
-
-        const {error: orderError} = await supabase
-        .from('orders')
-        .insert(ordersToInsert)
-        .select();
-
-        if (orderError) throw orderError;
-
-        // clear the cart after order is placed
-        const {error: clearCartError} = await supabase
-        .from('cart')
-        .delete()
-        .eq('user_id', user.id);
-
-        if (clearCartError) throw clearCartError;
-
-        if (!clearCartError) {
-            dispatch(clearCartLocal());
-        }
-
-        reset();
-        router.push('/successfulOrder');
+        console.log("Address upserted:", addressData);
+        console.log(loading)
 
     } catch (error) {
         console.error("Error submitting shipping address form:", error);
-        router.push('/unsuccessfulOrder');
+    } finally{
+        setLoading(false);
     }
   };
 
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="w-full space-y-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full py-8 space-y-3 flex flex-col gap-2">
         <div className='flex flex-col w-full gap-2'>
             <label className='text-zinc-600 text-sm font-medium font-inter leading-normal' htmlFor="shippingAddress">Shipping Address</label>
             <input 
@@ -227,8 +159,8 @@ export default function ShippingAddressForm({formRef}: ShippingAddressFormProps)
             <div className='flex flex-col w-1/2 gap-2'>
                 <label  className='text-zinc-600 text-sm font-medium font-inter leading-normal' htmlFor="zipcode">Zip Code</label>
                 <input 
-                    type="number"
-                    {...register('shippingAddress.zipCode', { valueAsNumber: true })}
+                    type="text"
+                    {...register('shippingAddress.zipCode')}
                     id='zipcode' 
                     className={`w-full rounded-md border px-4 py-2 border-neutral-300 focus:outline-neutral-600 ${errors.shippingAddress?.zipCode ? 'border-red-500' : ''}`}
                 />
@@ -255,34 +187,13 @@ export default function ShippingAddressForm({formRef}: ShippingAddressFormProps)
             </div>
         </div>
 
-        <div className='flex flex-col md:flex-row w-full gap-2'>
-            <div className='flex flex-col w-full md:w-1/2 gap-2'>
-                <label  className='text-zinc-600 text-sm font-medium font-inter leading-normal' htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    {...register('email')}
-                    id='email'
-                    className={`w-full rounded-md border px-4 py-2 border-neutral-300 focus:outline-neutral-600 ${errors.email ? 'border-red-500' : ''}`} 
-                    readOnly
-                />
-                    
-                {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
-        
-            </div>
-
-            <div className='flex flex-col w-full md:w-1/2 gap-2'>
-                <label  className='text-zinc-600 text-sm font-medium font-inter leading-normal' htmlFor="fullname">Full name</label>
-                <input 
-                    type="text" 
-                    {...register('fullName')}
-                    id='fullname'
-                    className={`w-full rounded-md border border-neutral-300 px-4 py-2 focus:outline-neutral-600 ${errors.fullName ? 'border-red-500' : ''}`}
-                />
-                {errors.fullName && <p className="text-sm text-red-500">{errors.fullName.message}</p>}
-            </div>
-        </div>
-
-      
+        <button 
+            type="submit"
+            disabled={loading}
+            className="bg-black text-white rounded-md py-2 px-4 disabled:opacity-50 w-fit"
+            >
+            {loading ? 'Saving...' : 'Save Address'}
+        </button>
     </form>
   );
 }
