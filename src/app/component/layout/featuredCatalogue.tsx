@@ -1,19 +1,21 @@
 "use client";
 
-import { useProducts } from '@/app/context/productContext';
 import React from 'react';
 import ProductCard from './productCard';
 import type { Products } from '@/app/types/product';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+
 
 const FeaturedCatalogue = () => {
-    const { products, loading } = useProducts();
+    const { items, loading } = useSelector((state: RootState) => state.products)
 
     // Early return if products are not loaded yet
-    if (!products || products.length === 0) return null;
+    if (!items || items.length === 0) return null;
     if (loading) {
         return <div className="text-center py-8">Loading...</div>;
     }
-    const featured = products
+    const featured = items
         .filter(product => product.tags?.includes('featured'));
 
 

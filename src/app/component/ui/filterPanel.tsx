@@ -37,7 +37,7 @@ const FilterPanel = ({
       <div>
         <p className="font-medium mb-2">Categories</p>
         <div className="flex gap-2 flex-wrap flex-col">
-          {['bags', 'shoes', 'clothes'].map((cat) => (
+          {['male', 'female', 'shirt', 'hoodies'].map((cat) => (
             <label key={cat} className="flex items-center gap-1 cursor-pointer border-b border-b-gray-200 py-2">
               <input
                 type="checkbox"

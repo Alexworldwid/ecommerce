@@ -2,11 +2,12 @@
 
 import type {WishlistItem} from "../../types/wishlist.ts"
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 import {useDispatch, useSelector} from "react-redux"
 import { addToCart } from "@/store/cartslice";
 import { AppDispatch, RootState } from '@/store/store';
-import { toggleWishlistItem } from "@/store/wishlistslice";
+import { fetchWishlist, loadWishlistLocal, toggleWishlistItem } from "@/store/wishlistslice";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 
 
@@ -14,6 +15,25 @@ import { toggleWishlistItem } from "@/store/wishlistslice";
 const AccountWishlist = () => {
     const dispatch = useDispatch<AppDispatch>();
     const wishlist = useSelector((state:RootState) => state.wishlist.items )
+    const loading = useSelector((state:RootState) => state.wishlist.loading)
+    const [loadingLocal, setLoadingLocal] = useState(true);
+
+    // ✅ Load wishlist on mount
+    useEffect(() => {
+        const loadWishlist = async () => {
+        // 1. Load from local cache
+        await dispatch(loadWishlistLocal());
+        setLoadingLocal(false)
+
+        // 2. Optionally, if user logged in, fetch from Supabase
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+            await dispatch(fetchWishlist(user.id));
+        }
+        };
+        loadWishlist();
+    }, [dispatch]);
 
 
     const handleAddToCart = (item: WishlistItem) => {
@@ -27,20 +47,14 @@ const AccountWishlist = () => {
         }
 
         dispatch(addToCart({userId: item.user_id, item: formatted}));
-       dispatch(toggleWishlistItem(item))
+        dispatch(toggleWishlistItem(item))
 
+    }
 
-        toast.success(`${item.products?.name} added to cart!`, {
-            duration: 3000,
-            position: 'top-center',
-            style: {
-                background: '#fff',
-                color: '#000',
-                borderRadius: '8px',
-                padding: '16px',
-                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-            },
-        });
+    if (loading && loadingLocal) {
+        return (
+            <div>loading wishlist...</div>
+        )
     }
 
 

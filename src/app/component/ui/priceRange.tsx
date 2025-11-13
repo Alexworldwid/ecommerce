@@ -28,16 +28,16 @@ const PriceRange = ({ minPrice, maxPrice, setPriceRange }: PriceRangeProps) => {
         <p className="font-medium mb-2">Price Range</p>
 
         <div className="flex justify-between text-sm mb-1">
-          <span>₦{priceRange[0].toLocaleString()}</span>
-          <span>₦{priceRange[1].toLocaleString()}</span>
+          <span>${priceRange[0].toLocaleString()}</span>
+          <span>${priceRange[1].toLocaleString()}</span>
         </div>
 
         <Slider.Root
           className="relative flex items-center select-none touch-none w-full h-5"
           value={priceRange}
           min={0}
-          max={1000}
-          step={50}
+          max={500}
+          step={40}
           onValueChange={handleChange}
         >
           <Slider.Track className="bg-gray-200 relative grow rounded-full h-[4px]">
