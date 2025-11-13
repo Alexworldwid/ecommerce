@@ -8,10 +8,16 @@ import React, { useRef } from 'react';
 const CheckoutClient = () => {
 
     const formRef = useRef<HTMLFormElement | null>(null);
+    const [loading, setLoading] = React.useState(false);
 
-    const handleOutsideSubmit = () => {
+    const handleOutsideSubmit = async () => {
         if (formRef.current) {
-            formRef.current.requestSubmit(); // triggers form submit
+            setLoading(true);
+            try {
+                await formRef.current.requestSubmit();   
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
@@ -28,7 +34,7 @@ const CheckoutClient = () => {
                 <article className='w-full max-w-[1113px] px-3 flex flex-col md:flex-row items-start gap-16 md:gap-0 justify-between py-8'>
                     <ShippingAddress formRef={formRef} />
                     <div className='w-full md:w-[1px] h-[1px] md:h-[500px] bg-gray-200'></div>
-                    <PlaceOrder submit={handleOutsideSubmit} />
+                    <PlaceOrder submit={handleOutsideSubmit} Loading={loading} />
                 </article>
             </section>
     );

@@ -1,3 +1,4 @@
+
 'use client';
 
 import AppliedFilter from '@/app/component/layout/appliedFilter';
@@ -76,11 +77,11 @@ export default function ListingResult() {
 
         const matchColor =
           !filters.color ||
-          (product.color ?? []).some((c) => c.colorName === filters.color);
+          (product.colors ?? []).some((c) => c.colorName === filters.color);
 
         const matchSize =
           !filters.size ||
-          (product.size ?? []).some((p) => p.sizeValue === filters.size);
+          (product.sizes ?? []).some((p) => p.sizeValue === filters.size);
 
         return matchPrice && matchColor && matchSize && matchCategory;
       });
@@ -135,7 +136,7 @@ export default function ListingResult() {
                         </p>
                     ) : sorted && sorted.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                              {paginatedProducts.map((product) => (
+                              {paginatedProducts.map((product) => ( 
                                   <div className='md:max-w-[320px]' key={product.id}>
                                     <ProductCard product={product} />
                                   </div>

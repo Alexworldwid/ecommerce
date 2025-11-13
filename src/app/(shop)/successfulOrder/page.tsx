@@ -1,7 +1,36 @@
 import PageIndicator from '@/app/component/ui/pageIndicator';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+
+
+export const metadata: Metadata = {
+  title: 'Cart',
+  description: 'Welcome to Eccomerce successful order page',
+  openGraph: {
+    title: 'Eccomerce Successful Order',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce homepage',
+    images: [
+      {
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eccomerce successful order',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
+  },
+}
+
 
 const SuccessfulOrder = () => {
     return (

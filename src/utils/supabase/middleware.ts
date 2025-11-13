@@ -35,10 +35,17 @@ export const updateSession = async (request: NextRequest) => {
       error,
     } = await supabase.auth.getUser();
 
+
+    // if (request.nextUrl.pathname.startsWith("/profile") && (!user || error)) {
+    //   return NextResponse.redirect(new URL("/login", request.url));
+    // }
+
     // Protect checkout
-    if (request.nextUrl.pathname.startsWith("/checkout") && (!user || error)) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
+    // if (request.nextUrl.pathname.startsWith("/checkout") && (!user || error)) {
+    //   return NextResponse.redirect(new URL("/login", request.url));
+    // }
+
+    
 
     console.log("🔍 Middleware running:", request.nextUrl.pathname, { user, error })
 

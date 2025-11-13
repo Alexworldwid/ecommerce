@@ -1,6 +1,33 @@
 import ForgotPasswordForm from '@/app/component/forms/forgotPasswordForm';
 import PageIndicator from '@/app/component/ui/pageIndicator';
+import { Metadata } from 'next';
 import React from 'react';
+
+export const metadata: Metadata = {
+  title: 'Forgot Password',
+  description: 'Welcome to Eccomerce home page',
+  openGraph: {
+    title: 'Eccomerce Forgot Password',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce homepage',
+    images: [
+      {
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eccomerce Forgot Password',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
+  },
+}
 
 
 const ForgotPassword = () => {

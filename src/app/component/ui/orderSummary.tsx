@@ -7,7 +7,7 @@ interface OrderSummaryProps {
 }
 
 const OrderSummary = ({cart}: OrderSummaryProps) => {
-    const subtotal = cart.reduce((acc, item) => acc + item.price * item.amount, 0);
+    const subtotal = cart.reduce((acc, item) => acc + ((item.products?.price ?? 0) * item.amount), 0);
     const roundedSubtotal = Math.round(subtotal * 100) / 100; // Round to two decimal places
     const tax = subtotal * 0.1;
     const roundedTax = Math.round(tax * 100) / 100; // Round to two decimal places

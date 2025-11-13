@@ -67,7 +67,7 @@ const UpdatePasswordForm = () => {
         <form
             ref={formRef}
             onSubmit={(e) => e.preventDefault()} // prevent auto submit
-            className="w-full space-y-3 pb-10 flex flex-col gap-3"
+            className="w-full space-y-3 pb-10 flex flex-col gap-3 py-8 max-w-[620px]"
             >
 
             <div>
@@ -115,7 +115,7 @@ const UpdatePasswordForm = () => {
                 type="button"
                 disabled={isPending}
                 onClick={handleSubmit(onValid)}
-                className={`${isPending ? "bg-black/75": "bg-black"} hover:bg-black/75 w-full rounded-md px-4 py-2 text-white disabled:opacity-50`}
+                className={`${isPending ? "bg-black/75": "bg-black"} hover:bg-black/75 w-fit  rounded-md px-4 py-2 text-white disabled:opacity-50`}
             >
                 {isPending ? "Reseting password..." : "Reset Password"}
             </button>

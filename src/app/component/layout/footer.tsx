@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 const Footer = () => {
     const pathname = usePathname();
 
-    const validPaths =  pathname !== '/cart' && pathname !== '/checkout' && pathname !== '/wishlist' && pathname !== '/successfulOrder' && pathname !== '/unsuccessfulOrder' && pathname !== '/login'
+    const validPaths =  pathname !== '/cart' && pathname !== '/checkout' && pathname !== '/wishlist' && pathname !== '/successfulOrder' && pathname !== '/unsuccessfulOrder' && pathname !== '/login' && pathname !== '/profile';
 
 
     

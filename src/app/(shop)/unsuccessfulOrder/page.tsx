@@ -1,7 +1,36 @@
 import PageIndicator from '@/app/component/ui/pageIndicator';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+
+
+export const metadata: Metadata = {
+  title: 'Unsuccessful Order',
+  description: 'Welcome to Eccomerce unsuccessful page',
+  openGraph: {
+    title: 'Eccomerce Unsuccessful Order',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce unsuccessful order',
+    images: [
+      {
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eccomerce unsuccessful order',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
+  },
+}
+
 
 const UnsuccessfulOrder = () => {
     return (

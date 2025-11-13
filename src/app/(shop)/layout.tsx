@@ -5,16 +5,18 @@ import { Toaster } from "react-hot-toast";
 // import MobileMenu from "../component/ui/mobileMenu";
 import { MenuProvider } from "../context/menuContext";
 import { ProductProvider } from "../context/productContext";
-import { CartProvider } from "../context/cartContext";
-import { WishlistProvider } from "../context/wishlistContext";
 import { SearchProvider } from "../context/searchContext";
 import { createClient } from "@/utils/supabase/server";
+import {ReactNode} from "react";
+import { AppProvider } from "../provider";
+
+
 
 
 
 
 export default async function shopLayout ({children}: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
   }>) {
 
     const supabase = await createClient();
@@ -22,10 +24,9 @@ export default async function shopLayout ({children}: Readonly<{
 
     return (
         <div className="relative">
+            <AppProvider>
             <MenuProvider >
             <ProductProvider>
-            <CartProvider>
-            <WishlistProvider>
             <SearchProvider>
                 <Header />
                 <Nav initialUser={user} />
@@ -35,10 +36,9 @@ export default async function shopLayout ({children}: Readonly<{
                 <Footer />
                 <Toaster position="top-center" />
             </SearchProvider>
-            </WishlistProvider>
-            </CartProvider>
             </ProductProvider>
             </MenuProvider>
+            </AppProvider>
         </div>
     )
     

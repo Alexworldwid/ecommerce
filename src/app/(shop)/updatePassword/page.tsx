@@ -1,8 +1,36 @@
 import UpdatePasswordForm from '@/app/component/forms/updatePasswordForm';
 import PageIndicator from '@/app/component/ui/pageIndicator';
 import { createClient } from '@/utils/supabase/server';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import React from 'react';
+
+
+export const metadata: Metadata = {
+  title: 'Update password',
+  description: 'Welcome to Eccomerce Update password page',
+  openGraph: {
+    title: 'Eccomerce Update Password',
+    description: 'Welcome to Eccomerce, your one stop shop for amenities',
+    url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/',
+    siteName: 'Eccomerce homepage',
+    images: [
+      {
+        url: 'https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eccomerce Update Password',
+    description: 'Eccomerce - your one stop shop for amenities',
+    images: ['https://ecommerce-git-main-adewales-projects-b629bcea.vercel.app/images/ecommerce-profile.png'], // Must be an absolute URL
+  },
+}
 
 
 
