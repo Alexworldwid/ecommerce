@@ -222,7 +222,6 @@ export const wishlistSlice = createSlice({
     clearWishlistLocal(state) {
       state.items = [];
       setCachedData("wishlist", []);
-      toast("Wishlist cleared");
     },
   },
   extraReducers: (builder) => {
